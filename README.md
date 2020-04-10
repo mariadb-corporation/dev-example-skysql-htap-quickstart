@@ -61,6 +61,8 @@ for example
 ./create_and_load.sh sky0001355.mdb0001390.db.skysql.net 5001 DB00009999 *******
 ```
 
+**Note:** Remember to wrap argument values in single quotes if they contain special characters (e.g. !)
+
 For more information on loading data into SkySQL databases be sure to check out the [official documentation](https://mariadb.com/products/skysql/docs/operations/data-loading/)!
 
 3.) Execute the following command on your MariaDB SkySQL database instance to set up replication.
