@@ -17,7 +17,7 @@ Before getting started with this walkthrough you will need to:
 3. Clone this repository.
 
 ```
-$ git clone https://github.com/rhedgpeth/skysql_htap_demo.git
+$ git clone https://github.com/mariadb-corporation/dev-example-skysql-htap-quickstart.git
 ```
 
 ## Overview
