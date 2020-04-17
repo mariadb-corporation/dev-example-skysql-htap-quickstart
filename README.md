@@ -10,7 +10,7 @@ And, if you haven't yet - [sign up for MariaDB SkySQL](https://mariadb.com/produ
 
 Before getting started with this walkthrough you will need to:
 
-1. [Install the latest, stable MariaDB client](https://mariadb.com/products/skysql/docs/clients/).
+1. [Install the latest, stable MariaDB client](https://mariadb.com/products/skysql/docs/clients/mariadb-client-for-skysql-services/#mariadb-client-for-skysql-services).
 
 2. [Launch a SkySQL Smart Transaction (HTAP) instance](https://mariadb.com/products/skysql/docs/operations/provision/#skysql-launch-smart).
 
