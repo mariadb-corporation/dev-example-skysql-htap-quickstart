@@ -6,7 +6,7 @@ user=$3
 pass=$4
 
 # use the arguments to connect to MariaDB SkySQl
-mariaDB="mariadb --host ${host} --port ${port} --user ${user} -p${pass} --ssl-ca skysql_chain.pem"
+mariadb="mariadb --host ${host} --port ${port} --user ${user} -p${pass} --ssl-ca skysql_chain.pem"
 
 echo "creating schema..."
 
