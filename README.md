@@ -4,18 +4,20 @@
 
 **The following is a walkthrough to get you up and running with a MariaDB SkySQL [Hybrid Transactional/Analytical Processing (HTAP)](https://mariadb.com/docs/solutions/htap/) database instance in less than 15 minutes.** No, seriously. Alright, let's get started!
 
+And, if you haven't yet - [sign up for MariaDB SkySQL](https://mariadb.com/products/skysql/get-started/). We're currently offering $500 credit which is a lot of runway depending on how you set up your instances. 
+
 ## Prerequisites 
 
 Before getting started with this walkthrough you will need to:
 
-1. [Install the latest, stable MariaDB client](https://downloads.mariadb.org/).
+1. [Install the latest, stable MariaDB client](https://mariadb.com/products/skysql/docs/clients/mariadb-client-for-skysql-services/#mariadb-client-for-skysql-services).
 
 2. [Launch a SkySQL Smart Transaction (HTAP) instance](https://mariadb.com/products/skysql/docs/operations/provision/#skysql-launch-smart).
 
 3. Clone this repository.
 
 ```
-$ git clone https://github.com/rhedgpeth/skysql_htap_demo.git
+$ git clone https://github.com/mariadb-corporation/dev-example-skysql-htap-quickstart.git
 ```
 
 ## Overview
@@ -59,6 +61,8 @@ for example
 ./create_and_load.sh sky0001355.mdb0001390.db.skysql.net 5001 DB00009999 *******
 ```
 
+**Note:** Remember to wrap argument values in single quotes if they contain special characters (e.g. !)
+
 For more information on loading data into SkySQL databases be sure to check out the [official documentation](https://mariadb.com/products/skysql/docs/operations/data-loading/)!
 
 3.) Execute the following command on your MariaDB SkySQL database instance to set up replication.
@@ -86,7 +90,7 @@ Cross-engine querying, or joining, allows you to query both transactional and an
 
 ```sql
 SELECT 
-    a.airport,
+    a.airline,
     COUNT(*)
 FROM
     travel.airlines a INNER JOIN
@@ -99,13 +103,13 @@ GROUP BY
 
 ```sql
 SELECT 
-    a.airport, 
+    a.airline, 
     AVG(dep_delay) 
 FROM 
-    travel.airports a INNER JOIN 
+    travel.airlines a INNER JOIN 
 travel_history.flights f ON a.iata_code = f.origin 
 GROUP BY
-    a.airport 
+    a.airline 
 ORDER BY
     AVG(dep_delay) 
 LIMIT 10;
