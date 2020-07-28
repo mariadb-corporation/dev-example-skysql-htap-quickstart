@@ -90,7 +90,7 @@ Cross-engine querying, or joining, allows you to query both transactional and an
 
 ```sql
 SELECT 
-    a.airport,
+    a.airline,
     COUNT(*)
 FROM
     travel.airlines a INNER JOIN
@@ -103,13 +103,13 @@ GROUP BY
 
 ```sql
 SELECT 
-    a.airport, 
+    a.airline, 
     AVG(dep_delay) 
 FROM 
-    travel.airports a INNER JOIN 
+    travel.airlines a INNER JOIN 
 travel_history.flights f ON a.iata_code = f.origin 
 GROUP BY
-    a.airport 
+    a.airline 
 ORDER BY
     AVG(dep_delay) 
 LIMIT 10;
