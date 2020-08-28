@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS travel_history;
+
 CREATE DATABASE travel_history;
 
 USE travel_history;

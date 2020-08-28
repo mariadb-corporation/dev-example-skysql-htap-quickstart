@@ -80,6 +80,12 @@ That's it! The following will be created, loaded, and configured to replicate (t
 - [travel_history](schema/cs_schema.sql#L1) (database)
     - [flights](schema/cs_schema.sql#L5) (ColumnStore table): 679996 rows
 
+<p align="center" spacing="10">
+    <kbd>
+        <img src="media/schema.png" />
+    </kbd>
+</p>
+
 ## The Power of HTAP
 
 ### Introduction to cross-engine querying

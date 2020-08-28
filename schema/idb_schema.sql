@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS travel;
+
 CREATE DATABASE travel;
 
 USE travel;
