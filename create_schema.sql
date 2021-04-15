@@ -1,5 +1,18 @@
-DROP DATABASE IF EXISTS travel;
+/*
+  The following SQL statements will:
+    - Create databases
+        - travel
+        - travel_history
+    - Create InnoDB tables for the travel database
+        - airlines
+        - airports
+        - flights
+*/
 
+DROP DATABASE IF EXISTS travel_history;
+CREATE DATABASE travel_history;
+
+DROP DATABASE IF EXISTS travel;
 CREATE DATABASE travel;
 
 USE travel;

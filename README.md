@@ -26,16 +26,37 @@ This walk-through will investigate the following:
 
 * Setting up an existing database instance
     * Connect to your MariaDB SkySQL HTAP instance
-    * Create the schema and load the tables
-    * Enable replication
+    * Create the schema
+    * Enable HTAP replication
+    * Replace a replicated InnoDB table with a ColumnStore table
+    * Load data into the tables
 * Introduction to cross-engine querying
 * Testing table-to-table replication
 
-## Set up the database instance
+## Setting up HTAP in MariaDB SkySQL
 
-The following steps will 
+The proceeding walk-through will result in the following setup:
 
-1. Download the HTAP instance's Certificate authority chain from SkySQL, and place in the root of this project.
+- [travel](schema/idb_schema.sql#L1) (database)
+    - [airlines](schema/idb_schema.sql#L5) (InnoDB table): 30 rows
+    - [airports](schema/idb_schema.sql#L11) (InnoDB table): 342
+    - [flights](schema/idb_schema.sql#L21) (InnoDB table): 0 rows
+- [travel_history](schema/cs_schema.sql#L1) (database)
+    - [flights](schema/cs_schema.sql#L5) (ColumnStore table): 679996 rows
+
+<p align="center" spacing="10">
+    <kbd>
+        <img src="media/schema.png" />
+    </kbd>
+</p> 
+
+In the next section, the following steps will walk you through the process for setting up HTAP (with replication) on MariaDB SkySQL. 
+
+For more details on this process please refer to the [official SkySQL documentation](https://mariadb.com/products/skysql/docs/operations/htap-replication/).
+
+### SkySQL HTAP Setup Steps 
+
+1.) Download the HTAP instance's Certificate authority chain from SkySQL, and place in the root of this project.
 
 <p align="center" spacing="10">
     <kbd>
@@ -49,42 +70,66 @@ The following steps will
     </kbd>
 </p>
 
-2. Execute the following command with your database instance information.
+2.) Open a terminal window and then, using the `mariadb` client within the root folder of this repository, connect to your MariaDB SkySQL HTAP service and create the schema:
+
+```bash
+$ mariadb --host <host_address> --port <port_number> --user <user_name> -p<password> --ssl-ca skysql_chain.pem < create_schema.sql
+```
+
+For example: 
+```bash
+$ mariadb --host htap-instance.mdb0001500.db.skysql.net --port 5001 --user DB00009999 -p'Password123!' --ssl-ca skysql_chain.pem < create_schema.sql
+```
+
+3.) Using the terminal, execute the following command to enable HTAP replication.
+
+```bash
+$ mariadb --host <host_address> --port <port_number> --user <user_name> -p<password> --ssl-ca skysql_chain.pem < enable_replication.sql
+```
+
+To confirm that replication has been setup you can use the `SHOW_HTAP_REPLICATION()` function within a SQL statement:
+
+```sql 
+SELECT SHOW_HTAP_REPLICATION();
+```
+
+Which should yield the following results:
+
+```sql
++-----------------------------------------------------------------------------------------------------------------+
+| show_htap_replication()                                                   |
++-----------------------------------------------------------------------------------------------------------------+
+| 
+	=== replication_filter ===
+	table: travel.flights
+	source database: travel
+	target database: travel_history
+
+ |
++-----------------------------------------------------------------------------------------------------------------+
+```
+
+4.) Using the terminal, execute the following command to replace InnoDB `flights` table in the `travel_history` database with a ColumnStore table.
+
+```bash
+$ mariadb --host <host_address> --port <port_number> --user <user_name> -p<password> --ssl-ca skysql_chain.pem < add_columnstore.sql
+```
+
+5.) Finally, execute the following command to load the `travel.airports`, `travel.airlines`, and `travel_history.flights` tables.
 
 ```
-$ ./create_and_load.sh <host_address> <port_number> <user> <password>
+$ ./load.sh <host_address> <port_number> <user> <password>
 ```
 
 for example
 
 ```
-./create_and_load.sh sky0001355.mdb0001390.db.skysql.net 5001 DB00009999 *******
+./load.sh htap-instance.mdb0001500.db.skysql.net 5001 DB00009999 *******
 ```
 
 **Note:** Remember to wrap argument values in single quotes if they contain special characters (e.g. !)
 
 For more information on loading data into SkySQL databases be sure to check out the [official documentation](https://mariadb.com/products/skysql/docs/operations/data-loading/)!
-
-3.) Execute the following command on your MariaDB SkySQL database instance to set up replication.
-
-```
-SELECT SET_HTAP_REPLICATION('flights','travel','travel_history');
-```
-
-That's it! The following will be created, loaded, and configured to replicate (travel.flights -> travel_history.flights).
-
-- [travel](schema/idb_schema.sql#L1) (database)
-    - [airlines](schema/idb_schema.sql#L5) (InnoDB table): 17 rows
-    - [airports](schema/idb_schema.sql#L11) (InnoDB table): 342
-    - [flights](schema/idb_schema.sql#L21) (InnoDB table): 0 rows
-- [travel_history](schema/cs_schema.sql#L1) (database)
-    - [flights](schema/cs_schema.sql#L5) (ColumnStore table): 679996 rows
-
-<p align="center" spacing="10">
-    <kbd>
-        <img src="media/schema.png" />
-    </kbd>
-</p>
 
 ## The Power of HTAP
 
