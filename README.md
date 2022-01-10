@@ -192,3 +192,20 @@ For more information on managing SkySQL HTAP replication be sure to check out th
 
 - [Sign up for MariaDB SkySQL](https://mariadb.com/products/skysql/get-started/)
 - [Official MariaDB SkySQL Documentation](https://mariadb.com/products/skysql/docs/)
+
+## Support and Contribution <a name="support-contribution"></a>
+
+Please feel free to submit PR's, issues or requests to this project project directly.
+
+If you have any other questions, comments, or looking for more information on MariaDB please check out:
+
+* [MariaDB Developer Hub](https://mariadb.com/developers)
+* [MariaDB Community Slack](https://r.mariadb.com/join-community-slack)
+
+Or reach out to us diretly via:
+
+* [developers@mariadb.com](mailto:developers@mariadb.com)
+* [MariaDB Twitter](https://twitter.com/mariadb)
+
+## License <a name="license"></a>
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=plastic)](https://opensource.org/licenses/MIT)
